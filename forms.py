@@ -16,6 +16,7 @@ class Insertar_cliente(FlaskForm):
     cp = StringField("CP")
     precio_metro = StringField("Precio Metro",validators=[validators.DataRequired()])
     notas = TextAreaField("Notas")
+    otros = BooleanField("Otros")
     
     def validate_nif(self, nif):
           
