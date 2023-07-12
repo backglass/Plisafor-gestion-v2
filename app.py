@@ -76,9 +76,24 @@ def clientes():
 
     if 'username' not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
-    clientes = Clientes.query.order_by(Clientes.nombre.asc()).all() # Muestra todos los clientes en la base de datos por orden alfabetico.
-    return render_template('clientes.html',clientes=clientes)
+    # Muestra todos los clientes en orden ascendente por el nombre y que en la columna tipo_cliente sea null o false
+    clientes = Clientes.query.filter((Clientes.tipo_cliente == None) | (Clientes.tipo_cliente == False)).order_by(Clientes.nombre.asc()).all()
     
+    return render_template('clientes.html',clientes=clientes)
+
+
+
+@app.route('/otros')  # Ruta para la pagina de lista de clientes con tipo_cliente True
+def otros():
+    
+    if 'username' not in session: 
+        return redirect('/')
+    # Muestra todos los clientes en orden ascendente por el nombre y que en la columna tipo_cliente True
+    clientes = Clientes.query.filter((Clientes.tipo_cliente == True)).order_by(Clientes.nombre.asc()).all()
+    
+    return render_template('clientes.html',clientes=clientes)
+
+
 
 @app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
@@ -141,7 +156,7 @@ def ver_cliente(ver_cliente):
         
     return render_template('ver_cliente.html',cliente=cliente, facturas=factura, form_estado = form_estado,suma_no_pagada=suma_no_pagada,suma_pagada=suma_pagada,iva_total_pagada=iva_total_pagada,numero_facturas=numero_facturas) # Devuelve la variable cliente con los datos del nif pasado por parametro
 
-
+ 
 
 @app.route("/clientes/crear", methods=["GET", "POST"]) # Ruta para la pagina de crear cliente 
 def crear_cliente():
@@ -157,9 +172,9 @@ def crear_cliente():
 
     form = Insertar_cliente()     # Crea el formulario de crear cliente objeto form 
     if form.validate_on_submit(): # Si el formulario es validado
-        
+        print(form.otros.data)
         # Crea un nuevo cliente con los datos del formulario 
-        cliente = Clientes(form.nif.data, form.nombre.data, form.telefono.data, form.telefono_movil.data, form.email.data, form.direccion.data,form.ciudad.data,form.provincia.data,form.cp.data,form.precio_metro.data, form.notas.data)
+        cliente = Clientes(form.nif.data, form.nombre.data, form.telefono.data, form.telefono_movil.data, form.email.data, form.direccion.data,form.ciudad.data,form.provincia.data,form.cp.data,form.precio_metro.data, form.notas.data,form.otros.data)
         db.session.add(cliente)
         
         try:                                      # Intenta guardar los datos en la base de datos
@@ -242,7 +257,7 @@ def facturas():
         return redirect('/')
     
     factura = Facturas.query.order_by(Facturas.num.desc()).all()
-    #factura = Facturas.query.order_by(cast(Facturas.total, Float).desc()).all()    
+       
     form = Listado_facturas()
     
     
@@ -291,7 +306,8 @@ def crear_factura(nif):
     fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa por la ruta
-    
+    cliente_o_otros = cliente.tipo_cliente  # Guarda el tipo de cliente en la variable cliente_o_otros para elegir que script cargar
+                                            # si controlar_otros o controlar_cliente
     if form.validate_on_submit():
 
         now = datetime.now()  ## Obtiene la fecha actual para que me funciones en heroku postgresql              
@@ -371,7 +387,7 @@ def crear_factura(nif):
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
     
-    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha)
+    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,cliente_o_otros=cliente_o_otros)
 
 
 @app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
@@ -387,7 +403,8 @@ def editar_factura(num):
     try:
         factura = Facturas.query.filter_by(num=num).first()
         cliente = Clientes.query.filter_by(nif=factura.nif).first()
-              
+        cliente_o_otros = cliente.tipo_cliente  # Guarda el tipo de cliente en la variable cliente_o_otros para elegir que script cargar
+                                            # si controlar_otros o controlar_cliente      
     except Exception as e:
         print("Error al buscar la factura ", e)
         return redirect(url_for('clientes'))
@@ -466,7 +483,7 @@ def editar_factura(num):
             print("Error al actualizar la factura ", e)
             return redirect(url_for('ver_cliente', ver_cliente=factura.nif))   # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
         
-    return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente)
+    return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente,cliente_o_otros=cliente_o_otros)
 
 
 
@@ -483,6 +500,7 @@ def ver_factura(num):
     ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    cliente_o_otros = cliente.tipo_cliente           # Guarda el tipo de cliente en la variable cliente_o_otros para elegir que script cargar
     form = Nueva_factura()                           # Crea una instancia del formulario 
      
     if form.validate_on_submit():
@@ -549,7 +567,7 @@ def ver_factura(num):
 
         return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
 
-    return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
+    return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente,cliente_o_otros=cliente_o_otros)
 
 @app.route("/facturas/eliminar/<num>", methods=["GET", "POST"])
 def eliminar_factura(num):
