@@ -383,6 +383,14 @@ hr {
     <h6 class="text-center mt-3 fw-light"><small>Tel: 968685475</small></h6>
    
 </div>
-<script type= "text/javascript" src="./static/js/controlador_facturas.js"></script>
+<!-- Este código verifica que valor tiene la variable cliente_o_otros 
+     y según su valor cargara el script para manejar las facturas -->
+     {% if cliente_o_otros == False or cliente_o_otros == None %}
+     <p> {{ cliente_o_otros }} </p>
+     <script type="text/javascript" src="/static/js/controlador_facturas.js"></script>
+ {% else %}
+     <h1>hola</h1>
+     <script type="text/javascript" src="/static/js/controlador_facturas_otros.js"></script>
+ {% endif %}
 </body>
 </html>
