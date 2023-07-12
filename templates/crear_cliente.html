@@ -27,7 +27,7 @@
                 {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control")}}
                 {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control")}}
                 {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
-
+                {{ form.otros.label(class_="form-check-label") }} {{ form.otros(class_="form-check-input") }}
                 <div class="">
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -36,6 +36,6 @@
         </div>
     </div>
 </div>
-
+ 
 
 {% endblock %}
