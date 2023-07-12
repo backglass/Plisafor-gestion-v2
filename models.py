@@ -17,9 +17,10 @@ class Clientes(db.Model):
     cp = db.Column(db.String(10))
     precio_metro = db.Column(db.String(10))
     notas = db.Column(db.String(10000))
+    tipo_cliente = db.Column(db.Boolean, default=False)
     pubs = db.relationship('Facturas', backref='cliente', lazy='dynamic')
 
-    def __init__(self, nif, nombre, telefono, teledono_movil, email, direccion, ciudad, provincia, cp, precio_metro, notas):
+    def __init__(self, nif, nombre, telefono, teledono_movil, email, direccion, ciudad, provincia, cp, precio_metro, notas, tipo_cliente):
         self.nif = nif
         self.nombre = nombre
         self.telefono = telefono
@@ -32,9 +33,12 @@ class Clientes(db.Model):
         self.direccion = direccion
         self.precio_metro = precio_metro
         self.notas = notas
+        self.tipo_cliente = tipo_cliente
 
     def __repr__(self):
-        return f"Cliente('{self.nif}', '{self.nombre}', '{self.telefono}', '{self.teledono_movil}', '{self.email}', '{self.direccion}','{self.precio_metro} '{self.notas}')"
+        return f"Cliente('{self.nif}', '{self.nombre}', '{self.telefono}', '{self.teledono_movil}', '{self.email}', '{self.direccion}','{self.precio_metro}, '{self.notas}', '{self.tipo_cliente}')"
+
+
 class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crear la tabla en la base de datos y usar sus propiedades
                           # Esta clase es así por que el usuario no tiene "productos especificos", casi siempre son facturas totalmente independientes de productos.
 
