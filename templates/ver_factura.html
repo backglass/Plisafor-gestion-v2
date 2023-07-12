@@ -1,0 +1,388 @@
+<html>
+
+<head>
+    <link href="/static/css/bootstrap4.css" rel="stylesheet" />
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+.tamaño_texto_textarea {
+      
+    font-size: 20px;
+ }
+  
+.outlinenone {
+    outline: none;
+    background-color: #dfe;
+    border: 0;
+  }
+.sinbordefondo {
+    background-color: #eee;
+    border: 0;
+
+  }
+  body{
+    margin-top:20px;
+    color: #484b51;
+}
+.text-secondary-d1 {
+    color: #728299!important;
+}
+.page-header {
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+    border-bottom: 1px dotted #e2e2e2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.page-title {
+    padding: 0;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 300;
+}
+.brc-default-l1 {
+    border-color: #dce9f0!important;
+}
+
+.ml-n1, .mx-n1 {
+    margin-left: -.25rem!important;
+}
+.mr-n1, .mx-n1 {
+    margin-right: -.25rem!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.text-grey-m2 {
+    color: #888a8d!important;
+}
+
+.text-success-m2 {
+    color: #86bd68!important;
+}
+
+.font-bolder, .text-600 {
+    font-weight: 600!important;
+}
+
+.text-110 {
+    font-size: 110%!important;
+}
+.text-blue {
+    color: #478fcc!important;
+}
+.pb-25, .py-25 {
+    padding-bottom: .75rem!important;
+}
+
+.pt-25, .py-25 {
+    padding-top: .75rem!important;
+}
+.bgc-default-tp1 {
+    background-color: rgba(121,169,197,.92)!important;
+}
+.bgc-default-l4, .bgc-h-default-l4:hover {
+    background-color: #f3f8fa!important;
+}
+.page-header .page-tools {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
+.none {
+    border: none;
+}
+
+.btn-light {
+    color: #757984;
+    background-color: #f5f6f9;
+    border-color: #dddfe4;
+}
+.w-2 {
+    width: 1rem;
+}
+
+.text-120 {
+    font-size: 120%!important;
+}
+.text-primary-m1 {
+    color: #4087d4!important;
+}
+
+.text-danger-m1 {
+    color: #dd4949!important;
+}
+.text-blue-m2 {
+    color: #68a3d5!important;
+}
+.text-150 {
+    font-size: 150%!important;
+}
+.text-60 {
+    font-size: 60%!important;
+}
+.text-grey-m1 {
+    color: #7b7d81!important;
+}
+.align-bottom {
+    vertical-align: bottom!important;
+}
+
+
+</style>
+
+<body>
+    
+<div class="page-content container">
+    <br>
+    <br>
+    <div class="page-header text-blue-d2">
+        <h1>
+           <p> PLISAFOR S.L.U </p>
+            <small class="page-info">
+                <i class="fa fa-angle-double-right text-80"></i>
+                Factura
+            </small>
+        </h1>
+        <br>
+        <div class="page-tools">
+
+        </div>
+    </div>
+
+    <br>
+    <div class="container px-0">
+        <div class="row mt-4">
+            <div class="col-12 col-lg-12">
+                <div class="row">
+                    <div class="col-12">
+                        
+                    </div>
+                </div>
+                <!-- .row -->
+
+                
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div>
+                            
+                            <span class="text-600 text-110 text-blue align-middle"><h3>{{ cliente.nombre }}</h3></span>
+                        </div>
+                        <div class="text-grey-m2">
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.nif }}
+                                </h4> 
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.direccion }}
+                                </h4>
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.ciudad }}
+                                </h4>
+                                
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.provincia }}
+                                </h4>
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.cp }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                        <hr class="d-sm-none" />
+                        <div class="text-grey-m2">
+
+                            <form method="post">
+                            {{ form.hidden_tag() }}
+                            <h4>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número:</span>{{ form.numero (class_="form-control-lg", value_= factura.numero  ,style_="border:none") }} </div>
+                            
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha:</span> {{ form.fecha (class_="form-control-lg", value_= factura.fecha.strftime('%d-%m-%Y') ,style_="border:none") }}</div> 
+                            </h4>
+                            <div class="my-2"><i></i></div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <br>
+                <div class="mt-4">
+                    <div class="row text-600 text-black bgc-default-tp1 py-25">
+                        <div class="d-none d-sm-block col-1"><h5>Precio</h5></div>
+                        <div class="col-9 col-sm-5"><h5>Descripción</h5></div>
+                        <div class="d-none d-sm-block col-4 col-sm-2"><h5>Metros</h5></div>
+                        <div class="d-none d-sm-block col-sm-2"><h5>Faldas</h5></div>
+                        <div class="col-2"><h5>Total</h5></div>
+                    </div>
+                    
+                    <div class="text-95 text-secondary-d3">
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio1 (class_="form-control none",value_=factura.precio1, onchange="sumar1(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion1 (class_="form-control none",value =factura.descripcion1)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros1 (class_="form-control none",value_=factura.metros1,  onchange="sumar1(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas1 (class_="form-control none",value_=factura.faldas1,  onchange="sumar1(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe1 (class_="form-control none",value_=factura.importe1, )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control bgc-default-l4 none ",value_=factura.precio2,  onchange="sumar2(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion2 (class_="form-control bgc-default-l4 none ",value =factura.descripcion2)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control bgc-default-l4 none",value_=factura.metros2,  onchange="sumar2(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control bgc-default-l4 none",value_=factura.faldas2,  onchange="sumar2(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe2 (class_="form-control bgc-default-l4 none",value_=factura.importe2, )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio3 (class_="form-control none",value_=factura.precio3 , onchange="sumar3(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion3 (class_="form-control none",value = factura.descripcion3)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros3 (class_="form-control none",value_=factura.metros3, onchange="sumar3(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas3 (class_="form-control none",value_=factura.faldas3,  onchange="sumar3(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe3 (class_="form-control none",value_=factura.importe3 )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control bgc-default-l4 none",value_=factura.precio4,  onchange="sumar4(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion4 (class_="form-control bgc-default-l4 none",value =factura.descripcion4)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control bgc-default-l4 none",value_=factura.metros4, onchange="sumar4(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control bgc-default-l4 none",value = factura.faldas4, onchange="sumar4(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe4 (class_="form-control bgc-default-l4 none",value_=factura.importe4 )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio5 (class_="form-control none",value_=factura.precio5, onchange="sumar5(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion5 (class_="form-control none",value =factura.descripcion5)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros5 (class_="form-control none",value_=factura.metros5, onchange="sumar5(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas5 (class_="form-control none",value_=factura.faldas5, onchange="sumar5(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe5 (class_="form-control none",value_=factura.importe5)}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio6 (class_="form-control bgc-default-l4 none",value_=factura.precio6, onchange="sumar6(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion6 (class_="form-control bgc-default-l4 none",value =factura.descripcion6)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros6 (class_="form-control bgc-default-l4 none",value_=factura.metros6, onchange="sumar6(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas6 (class_="form-control bgc-default-l4 none",value_=factura.faldas6, onchange="sumar6(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe6 (class_="form-control bgc-default-l4 none",value_=factura.importe6)}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio7 (class_="form-control none",value_=factura.precio7, onchange="sumar7(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion7 (class_="form-control none",value =factura.descripcion7)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros7 (class_="form-control none",value_=factura.metros7, onchange="sumar7(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas7 (class_="form-control none",value_=factura.faldas7, onchange="sumar7(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe7 (class_="form-control none",value_=factura.importe7)}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio8 (class_="form-control bgc-default-l4 none",value_=factura.precio8, onchange="sumar8(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion8 (class_="form-control bgc-default-l4 none", value =factura.descripcion8)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros8 (class_="form-control bgc-default-l4 none",value_=factura.metros8, onchange="sumar8(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control bgc-default-l4 none",value_=factura.faldas8, onchange="sumar8(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe8 (class_="form-control bgc-default-l4 none",value_=factura.importe8)}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio9 (class_="form-control  none",value_=factura.precio9, onchange="sumar9(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion9 (class_="form-control  none", value =factura.descripcion9)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros9 (class_="form-control  none",value_=factura.metros8, onchange="sumar9(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas9 (class_="form-control  none",value_=factura.faldas9, onchange="sumar9(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe9 (class_="form-control none",value_=factura.importe9)}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio10 (class_="form-control bgc-default-l4 none",value_=factura.precio10, onchange="sumar10(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion10 (class_="form-control bgc-default-l4 none", value =factura.descripcion10)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros10 (class_="form-control bgc-default-l4 none",value_=factura.metros10, onchange="sumar10(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas10 (class_="form-control bgc-default-l4 none",value_=factura.faldas10, onchange="sumar10(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe10 (class_="form-control bgc-default-l4 none",value_=factura.importe10)}}</div>
+                        </div>
+                    </div>
+                 
+                    <div class="row border-b-2 brc-default-l2"></div>
+
+                
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                            <textarea class = "form-control tamaño_texto_textarea" id="notas" name="notas" rows="5" style="border:none" >{{ factura.notas }}</textarea>
+                            
+                        </div>
+
+                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Total
+                                    
+                                </div>
+                                
+                                <div class="col-5">
+                                    <span class="text-120 text-secondary-d1" id="subtotal_text">{{ form.sub_total_sin_iva (class_="text-80 text-success-d3 opacity-2",value_=factura.subtotal, style_="border:none") }}</span>
+                                </div>
+                            
+                            </div>
+
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    IVA (21%)
+                                    
+                                </div>
+                                
+                                <div class="col-5">
+                                    <span class="text-110 text-secondary-d1" id = "iva_text"><input class="form-control" id="iva_input" style="border:none" type="text"></span>
+                                </div>
+                            </div>
+
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                <div class="col-7 text-right">
+                                    Precio final <span class="text-100 text-success-d3 opacity-2">€</span>
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-150 text-success-d3 opacity-2" id ="total_factura_text">{{ form.total_con_iva (class_="text-100 text-success-d3 opacity-2", style_= "border:none", value_=factura.total) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+
+                    <hr />
+
+                    <div>
+                                                                        
+                        <button type="submit" class="btn btn-success btn-bold px-4 float-right mt-3 mt-lg-0  d-print-none" onclick="printHTML()">Imprimir</button>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <h6 class="text-center mt-3 fw-light"><small>PLISAFOR S.L.U B30442685</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Avenida Narciso Yepes n7</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Fortuna (Murcia) 30620</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Para obtener más ayuda, póngase en contacto :</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Tel: 968685475</small></h6>
+   
+</div>
+<script type= "text/javascript" src="./static/js/controlador_facturas.js"></script>
+</body>
+</html>

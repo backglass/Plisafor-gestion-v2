@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"> 
+    <title>{% block title %} Plisados Plisafor Gestión {% endblock %}</title>
+
+  <style>
+
+    /* Custom style to set icon size para los mensajes flash*/
+  .alert i[class^="bi-"] {
+    font-size: 1.5em;
+    line-height: 1;
+  }
+  </style> 
+
+</head>
+<body>
+  
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-print-none">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{ url_for ('index') }}">Plisafor</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for ('index') }}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('clientes')}}">Clientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('crear_cliente') }}">Nuevo cliente</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('facturas') }}">Facturas</a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <div class="container" id="alerta">
+        <!--Revisa los mensajes flash y si existen los muestra segun su categoria que tipo de mensaje sea,succes,danger etc-->
+      
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        {% if category == "info" %}
+        <!-- Factura pagada correctamente -->
+        <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-check-circle-fill"></i>
+          <strong class="mx-2">Hecho!</strong> {{ message }}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+        {% elif category == "danger" %}
+        <!-- Factura no pagada todavía -->
+      
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-check-circle-fill"></i>
+          <strong class="mx-2">Hecho!</strong> {{ message}}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+        {% elif category =="success" %}
+        <!-- Factura creada correctamente -->
+      
+        <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-info-circle-fill"></i>
+          <strong class="mx-2">Info!</strong> {{ message }}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+      
+      </div>
+      
+      </div>
+      {% endif %}
+      
+      {% endfor %}
+    </div>
+    {% block content %} 
+    
+    {% endblock %}
+    <script>
+    window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta(mensajes flash)" despues de un tiempo
+  </script>
+</body>
+</html>
