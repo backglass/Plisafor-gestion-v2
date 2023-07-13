@@ -321,7 +321,7 @@ hr {
                 
                     <div class="row mt-3">
                         <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                            <textarea class = "form-control tamaño_texto_textarea" id="notas" name="notas" rows="5" style="border:none" >{{ factura.notas }}</textarea>
+                            {{ form.notas (class_="form-control tamaño_texto_textarea", rows ="5",placeholder="Hacer ingreso en ES71 2100 8298 1113 0009 6422") }}
                             
                         </div>
 
@@ -386,10 +386,10 @@ hr {
 <!-- Este código verifica que valor tiene la variable cliente_o_otros 
      y según su valor cargara el script para manejar las facturas -->
      {% if cliente_o_otros == False or cliente_o_otros == None %}
-     <p> {{ cliente_o_otros }} </p>
+
      <script type="text/javascript" src="/static/js/controlador_facturas.js"></script>
  {% else %}
-     <h1>hola</h1>
+
      <script type="text/javascript" src="/static/js/controlador_facturas_otros.js"></script>
  {% endif %}
 </body>
