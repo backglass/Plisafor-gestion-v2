@@ -256,7 +256,7 @@ def facturas():
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
     
-    factura = Facturas.query.order_by(Facturas.num.desc()).all()
+    factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.fecha.desc()).all()
        
     form = Listado_facturas()
     
@@ -267,18 +267,19 @@ def facturas():
         
         # Si la selección es "importe" ordena las facturas por importe
         if selection == "importe":
-            factura = Facturas.query.order_by(cast(Facturas.total, Float).desc()).all()
+            factura = Facturas.query.filter(Facturas.numero != 99999).order_by(cast(Facturas.total, Float).desc()).all()
+
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
         
         # Si la selección es "fecha" ordena las facturas por fecha
         if selection == "numero_factura":
-            factura = Facturas.query.order_by(Facturas.num.desc()).all()
+            factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.numero.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
         
         if selection == "fecha":
-            factura = Facturas.query.order_by(Facturas.fecha.desc()).all()
+            factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.fecha.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
             
@@ -292,6 +293,56 @@ def facturas():
     
 
     return render_template('facturas.html', facturas = factura,form=form) # Muestra todas las facturas en la base de datos
+
+
+
+@app.route("/facturas_otros",methods = ["GET","POST"]) # Ruta para ver la lista de todas las facturas
+def facturas_otros():
+
+    
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+    
+    factura = Facturas.query.filter(Facturas.numero == 99999).order_by(Facturas.numero.desc()).all()
+       
+    form = Listado_facturas()
+    
+    
+    if form.validate_on_submit():
+        # Obtener la selección del usuario desde el formulario list selection.
+        selection = form.selection.data
+        
+        # Si la selección es "importe" ordena las facturas por importe
+        if selection == "importe":
+            factura = Facturas.query.filter(Facturas.numero == 99999).order_by(cast(Facturas.total, Float).desc()).all()
+
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+        
+        # Si la selección es "fecha" ordena las facturas por fecha
+        if selection == "numero_factura":
+            factura = Facturas.query.filter(Facturas.numero == 99999).order_by(Facturas.numero.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+        
+        if selection == "fecha":
+            factura = Facturas.query.filter(Facturas.numero == 99999).order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+            
+            
+        
+        # procesamiento de la selección aquí
+        print ( 'Seleccionado: {}'.format(selection))
+        return render_template('facturas.html', factura = factura,form=form)
+    
+    # Busca todas las facturas de los clientes en la base de datos ordenadas con fecha mas actual
+    
+
+    return render_template('facturas.html', facturas = factura,form=form) # Muestra todas las facturas en la base de datos
+
+
+
 
 
 @app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
