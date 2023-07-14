@@ -256,7 +256,7 @@ def facturas():
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
     
-    factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.fecha.desc()).all()
+    factura = Facturas.query.filter(Facturas.numero != 99999).order_by(Facturas.fecha.desc()).all()
        
     form = Listado_facturas()
     
@@ -274,12 +274,12 @@ def facturas():
         
         # Si la selección es "fecha" ordena las facturas por fecha
         if selection == "numero_factura":
-            factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.numero.desc()).all()
+            factura = Facturas.query.filter(Facturas.numero != 99999).order_by(Facturas.numero.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
         
         if selection == "fecha":
-            factura = Facturas.query.filter(Facturas.num != 99999).order_by(Facturas.fecha.desc()).all()
+            factura = Facturas.query.filter(Facturas.numero != 99999).order_by(Facturas.fecha.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
             
