@@ -455,7 +455,8 @@ def editar_factura(num):
         factura = Facturas.query.filter_by(num=num).first()
         cliente = Clientes.query.filter_by(nif=factura.nif).first()
         cliente_o_otros = cliente.tipo_cliente  # Guarda el tipo de cliente en la variable cliente_o_otros para elegir que script cargar
-                                            # si controlar_otros o controlar_cliente      
+                                                # si controlar_otros o controlar_cliente     
+
     except Exception as e:
         print("Error al buscar la factura ", e)
         return redirect(url_for('clientes'))
