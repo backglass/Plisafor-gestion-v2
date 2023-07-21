@@ -282,7 +282,17 @@ def facturas():
             factura = Facturas.query.filter(Facturas.numero != 99999).order_by(Facturas.fecha.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
-            
+       
+        if selection == "pagado":
+            factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == True).order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+       
+        if selection == "nopagado":
+            factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == False).order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+        
             
         
         # procesamiento de la selección aquí
@@ -329,6 +339,17 @@ def facturas_otros():
             factura = Facturas.query.filter(Facturas.numero == 99999).order_by(Facturas.fecha.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
+        
+        if selection == "pagado":
+            factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == True).order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+       
+        if selection == "nopagado":
+            factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == False).order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)        
+            
             
             
         
