@@ -100,7 +100,7 @@ class Nueva_factura(FlaskForm):
     
     
 class Listado_facturas(FlaskForm):
-    selection = SelectField('Ordenar por', choices=[('numero_factura', 'Numero factura'),("fecha","Fecha"), ('importe', 'Importe')], default = "Numero factura")
+    selection = SelectField('Ordenar por', choices=[('numero_factura', 'Numero factura'),("fecha","Fecha"), ('importe', 'Importe'),("pagado","Pagado"),("nopagado","No pagado")], default = "Numero factura")
     submit = SubmitField('Buscar')        
 
 #Formulario para crear login
