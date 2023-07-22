@@ -72,6 +72,8 @@
     </div>
     </h5>
 
+  
+
 
         <table class="table shadow-sm table-striped bg-light table-hover">
           <thead >
@@ -141,7 +143,23 @@
           
   
   </table>
-
+  <div class="container">
+    <div class="row ">
+      <div class="col">
+        
+    {% if pagado == True or pagado == False %}
+      <div class="col">
+        {% if pagado == True %}
+         <h4 class="text-center mt-3">Pagado</h4>
+         <p id="resumen_todas_facturas"><span class="iconoverde">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
+        {% else %}
+        <h4 class="text-center mt-3">No pagado</h4>
+        <p id="resumen_todas_facturas"><span class="iconorojo">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
 
 
 
