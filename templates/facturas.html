@@ -8,7 +8,12 @@
 
 
 <!-- Estilos para el color de los iconos, los iconos los traje desde google icons -->
-
+<script type="text/javascript">
+  function submitForm() {
+      var form = document.getElementById("my-form");
+      form.submit();
+  }
+</script>
 <style>
   .intro_textarea {
     white-space: pre-line;
@@ -56,14 +61,12 @@
         <div class="card-body">
 
           <p class="card-text"><b> 
-            <form method= "POST" >
-           
-            {{ form.hidden_tag () }}
-            <label for="selection">Ordenar por:</label>
-            {{ form.selection(class_="form-control", placehorder_="aa") }}
-            {{ form.submit(class_="btn btn-primary")}}
-
-            </form>
+            <form method="POST" id="my-form">
+              {{ form.hidden_tag() }}
+              <label for="selection">Ordenar por:</label>
+              {{ form.selection(class_="form-control", placeholder="Seleccione una opción", onchange="submitForm()") }}
+              <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
   
 
               
@@ -72,7 +75,26 @@
     </div>
     </h5>
 
-  
+    <div class="container">
+     
+        <div class="col">
+        <!-- El siguiente if verifica si hay la variable pagado, si la hay ejecuta el siguiente código 
+             Esto permite saber si queremos ver la selección de pagada o no pagada-->  
+      {% if pagado == True or pagado == False %}
+        
+        <!-- El siguiente if verifica el valor variable pagado, si es True ejecuta el siguiente código 
+             Esto permite saber si queremos ver la selección de pagada o no pagada-->
+          {% if pagado == True %}
+           <h4 class="text-center mt-3">Pagado</h4>
+           <p id="resumen_todas_facturas"><span class="iconoverde">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
+          {% else %}
+          <h4 class="text-center mt-3">No pagado</h4>
+          <p id="resumen_todas_facturas"><span class="iconorojo">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
+          {% endif %}
+        
+        {% endif %}
+      </div>
+    </div>
 
 
         <table class="table shadow-sm table-striped bg-light table-hover">
@@ -143,32 +165,10 @@
           
   
   </table>
-  <div class="container">
-    <div class="row ">
-      <div class="col">
-      <!-- El siguiente if verifica si hay la variable pagado, si la hay ejecuta el siguiente código 
-           Esto permite saber si queremos ver la selección de pagada o no pagada-->  
-    {% if pagado == True or pagado == False %}
-      <div class="col">
-      <!-- El siguiente if verifica el valor variable pagado, si es True ejecuta el siguiente código 
-           Esto permite saber si queremos ver la selección de pagada o no pagada-->
-        {% if pagado == True %}
-         <h4 class="text-center mt-3">Pagado</h4>
-         <p id="resumen_todas_facturas"><span class="iconoverde">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
-        {% else %}
-        <h4 class="text-center mt-3">No pagado</h4>
-        <p id="resumen_todas_facturas"><span class="iconorojo">{{ "%.2f" % total_facturas }}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
-        {% endif %}
-      </div>
-      {% endif %}
-    </div>
-  </div>
 
-
-
-   {% endblock %}
+    {% endblock %}
    
-    
+
 
 
 
