@@ -263,16 +263,26 @@ def facturas():
     
     if form.validate_on_submit():
         # Obtener la selección del usuario desde el formulario list selection.
-        selection = form.selection.data
+        fecha_desde = form.fecha_desde.data
+        fecha_hasta = form.fecha_hasta.data
         
+        selection = form.selection.data
+
         # Si la selección es "importe" ordena las facturas por importe
         if selection == "importe":
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero != 99999,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(cast(Facturas.total, Float).desc()).all()
+                return render_template('facturas.html', facturas = factura,form=form)
             factura = Facturas.query.filter(Facturas.numero != 99999).order_by(cast(Facturas.total, Float).desc()).all()
 
             return render_template('facturas.html', facturas = factura,form=form)
         
         # Si la selección es "fecha" ordena las facturas por fecha
         if selection == "numero_factura":
+            if fecha_desde and fecha_hasta:     # Si hay fecha desde y fecha hasta ordena las facturas por fecha entre esas fechas
+                factura = Facturas.query.filter(Facturas.numero != 99999,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.numero.desc()).all()
+                return render_template('facturas.html', facturas = factura,form=form)
+
             factura = Facturas.query.filter(Facturas.numero != 99999).order_by(Facturas.numero.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
@@ -283,6 +293,11 @@ def facturas():
             return render_template('facturas.html', facturas = factura,form=form)
        
         if selection == "pagado":
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == True,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.fecha.desc()).all()
+                total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
+                pagado = True   #Para cargar la parte de del jinga que muestra el total de las facturas pagadas
+                return render_template('facturas.html', facturas = factura,form=form,total_facturas=total_facturas,pagado=pagado)
             factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == True).order_by(Facturas.fecha.desc()).all()
             
             total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
@@ -291,6 +306,12 @@ def facturas():
 
        
         if selection == "nopagado":
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == False,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.fecha.desc()).all()
+                total_facturas = sum(float(factura.total) for factura in factura)
+                pagado = False   # Para cargar la parte de del jinga que muestra el total de las facturas no pagadas
+                return render_template('facturas.html', facturas = factura,form=form,total_facturas=total_facturas,pagado=pagado)
+                
             factura = Facturas.query.filter(Facturas.numero != 99999, Facturas.pagada == False).order_by(Facturas.fecha.desc()).all()
             total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
             pagado = False   # Para cargar la parte de del jinga que muestra el total de las facturas no pagadas
@@ -323,17 +344,27 @@ def facturas_otros():
     
     if form.validate_on_submit():
         # Obtener la selección del usuario desde el formulario list selection.
+        fecha_desde = form.fecha_desde.data
+        fecha_hasta = form.fecha_hasta.data
         selection = form.selection.data
         
         # Si la selección es "importe" ordena las facturas por importe
         if selection == "importe":
+            
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero == 99999,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(cast(Facturas.total, Float).desc()).all()
+                return render_template('facturas.html', facturas = factura,form=form)
+           
             factura = Facturas.query.filter(Facturas.numero == 99999).order_by(cast(Facturas.total, Float).desc()).all()
-
-            print(selection)
+     
             return render_template('facturas.html', facturas = factura,form=form)
         
         # Si la selección es "fecha" ordena las facturas por fecha
         if selection == "numero_factura":
+            if fecha_desde and fecha_hasta:     # Si hay fecha desde y fecha hasta ordena las facturas por fecha entre esas fechas
+                factura = Facturas.query.filter(Facturas.numero == 99999,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.numero.desc()).all()
+                return render_template('facturas.html', facturas = factura,form=form)       
+                 
             factura = Facturas.query.filter(Facturas.numero == 99999).order_by(Facturas.numero.desc()).all()
             print(selection)
             return render_template('facturas.html', facturas = factura,form=form)
@@ -344,6 +375,12 @@ def facturas_otros():
             return render_template('facturas.html', facturas = factura,form=form)
         
         if selection == "pagado":
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == True,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.fecha.desc()).all()
+                total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
+                pagado = True   #Para cargar la parte de del jinga que muestra el total de las facturas pagadas
+                return render_template('facturas.html', facturas = factura,form=form,total_facturas=total_facturas,pagado=pagado)   
+                     
             factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == True).order_by(Facturas.fecha.desc()).all()
             
             total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
@@ -352,6 +389,12 @@ def facturas_otros():
 
        
         if selection == "nopagado":
+            if fecha_desde and fecha_hasta:
+                factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == False,Facturas.fecha.between(fecha_desde,fecha_hasta)).order_by(Facturas.fecha.desc()).all()
+                total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
+                pagado = True   #Para cargar la parte de del jinga que muestra el total de las facturas pagadas
+                return render_template('facturas.html', facturas = factura,form=form,total_facturas=total_facturas,pagado=pagado)    
+                    
             factura = Facturas.query.filter(Facturas.numero == 99999, Facturas.pagada == False).order_by(Facturas.fecha.desc()).all()
             print(selection)
             total_facturas = sum(float(factura.total) for factura in factura)      # Suma el total de todas las facturas 
