@@ -7,13 +7,14 @@
 
 
 
-<!-- Estilos para el color de los iconos, los iconos los traje desde google icons -->
+
 <script type="text/javascript">
   function submitForm() {
       var form = document.getElementById("my-form");
       form.submit();
   }
 </script>
+<!-- Estilos para el color de los iconos, los iconos los traje desde google icons -->
 <style>
   .intro_textarea {
     white-space: pre-line;
@@ -48,6 +49,8 @@
     background: #dbdfe5;
   }
   </style>
+
+
   <div class="container">
     <h2 class="text-center mt-3">Listado todas la facturas</h2><br>
   
@@ -61,12 +64,28 @@
         <div class="card-body">
 
           <p class="card-text"><b> 
-            <form method="POST" id="my-form">
-              {{ form.hidden_tag() }}
-              <label for="selection">Ordenar por:</label>
-              {{ form.selection(class_="form-control", placeholder="Seleccione una opción", onchange="submitForm()") }}
-              <button type="submit" class="btn btn-primary">Enviar</button>
-          </form>
+        <form method="POST" id="my-form">
+            {{ form.hidden_tag() }}
+            <label for="selection">Ordenar por:</label>
+            {{ form.selection(class_="form-control", placeholder="Seleccione una opción", onchange="submitForm()") }}
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <span class="input-group-text">Desde</span>
+                </div>
+                <div class="col-auto">
+                    {{ form.fecha_desde(class_="form-control", type="date") }}
+                </div>
+                <div class="col-auto">
+                    <span class="input-group-text">Hasta</span>
+                </div>
+                <div class="col-auto">
+                    {{ form.fecha_hasta(class_="form-control", type="date") }}
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
   
 
               
