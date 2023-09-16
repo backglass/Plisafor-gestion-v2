@@ -28,7 +28,16 @@ class Insertar_cliente(FlaskForm):
             raise validators.ValidationError("El NIF debe tener 9 caracteres")
         if "." in nif.data:
             raise validators.ValidationError("El NIF no puede contener puntos")
-
+   
+    def validate_cp(self, cp):
+        """
+        Función para validar el CP del cliente, usada dentro del la propia clase
+        para comporbar si el CP tiene cinco caracteres y si no tiene un punto
+        """
+        if len(cp.data) != 5:
+            raise validators.ValidationError("El CP debe tener 5 caracteres")
+        if "." in cp.data:
+            raise validators.ValidationError("El CP no puede contener puntos")
 
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
