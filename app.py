@@ -41,7 +41,7 @@ def index():
         
         nombre = form.nombre.data
         password = form.password.data
-        print (type(nombre),nombre)
+        
         if nombre == "" or password == "":               # Si el nombre o el password estan vacios redirige a la pagina de login(index)
             return render_template('index.html',error="Introduce un usuario y contraseña",form=form)
        
@@ -52,15 +52,20 @@ def index():
             flash('Usuario no existe','danger')
             print("usuario no existe")
 
-            return render_template('index.html',form=form)
-
+            return render_template('index.html',form=form,error="Usuario no existe")
+       
+        if usuario.nombre == nombre and usuario.password != password: # Si el usuario existe y el password es incorrecto redirige a la pagina de login(index)
+            flash('Usuario no existe','danger')
+            
+            return render_template('index.html',error="Password incorrecto",form=form)
+            
         if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige "a clientes"
             session['username'] = nombre
-            print("test")
+            
             return redirect('clientes')
+
                 
-        else:                                                         # Si el usuario no existe o el password es incorrecto redirige a la pagina de login(index)
-                return render_template('index.html')
+
     return render_template('index.html',form=form)
     
 
@@ -203,14 +208,17 @@ def editar_cliente(nif):
    
     cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     form = Insertar_cliente()                           # Crea una instancia del formulario de cr
-    
+
     if form.validate_on_submit():
-                
+        cliente.nif = form.nif.data
         cliente.nombre = form.nombre.data
+        cliente.direccion = form.direccion.data
+        cliente.ciudad = form.ciudad.data
+        cliente.provincia = form.provincia.data
+        cliente.cp = form.cp.data
         cliente.telefono = form.telefono.data
         cliente.teledono_movil = form.telefono_movil.data
         cliente.email = form.email.data
-        cliente.direccion = form.direccion.data
         cliente.precio_metro = form.precio_metro.data
         cliente.notas = form.notas.data
         
@@ -733,5 +741,4 @@ def etiqueta(nif):
 
 if __name__ == '__main__':
   # app.run()
-   app.run(debug=True)
-    
+    app.run(host='0.0.0.0', debug=True)    
