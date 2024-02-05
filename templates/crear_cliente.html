@@ -8,7 +8,7 @@
         <div class="container">
             <form method="post">
                 {{ form.hidden_tag() }}
-                {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control" )}}
+                {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control",maxlength=9 )}}
                 {% for error in form.nif.errors %} <!-- "AQUI" Recorre si el contenedor de errores del wtf en este caso en el campo nif, si no se cumplen las resticciones saltara el error-->
                 <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
                     <i class="bi-check-circle-fill"></i>
@@ -25,7 +25,7 @@
                 {{ form.telefono.label (class_="form-label") }} {{ form.telefono (class_="form-control")}}
                 {{ form.telefono_movil.label (class_="form-label") }} {{ form.telefono_movil (class_="form-control")}}
                 {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control")}}
-                {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control")}}
+                {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control",maxlength=10)}}
                 {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
                 {{ form.otros.label(class_="form-check-label") }} {{ form.otros(class_="form-check-input") }}
                 <div class="">
