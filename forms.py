@@ -38,6 +38,13 @@ class Insertar_cliente(FlaskForm):
             raise validators.ValidationError("El CP debe tener 5 caracteres")
         if "." in cp.data:
             raise validators.ValidationError("El CP no puede contener puntos")
+    
+    def validate_precio_metro(self, precio_metro):
+        """
+        Función para validar el precio metro del cliente
+        """
+        if len(precio_metro.data) > 10:
+            raise validators.ValidationError("El precio metro no puede tener más de 10 caracteres")
 
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
